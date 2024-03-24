@@ -65,4 +65,7 @@ public class FilmeAvaliacaoService {
 
         return array;
     }
+    public void cadastrarFilmeAvaliacao(FilmeAvaliacao filmeAvaliacao) {
+        filmeAvaliacaoRepository.save(filmeAvaliacao);
+    }
 }

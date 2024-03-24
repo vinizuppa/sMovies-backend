@@ -6,10 +6,7 @@ import br.com.smovies.rest.dtos.FiltroDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/filme")
@@ -26,5 +23,10 @@ public class FilmeController {
     @PostMapping("/filtro")
     public ResponseEntity<?> buscarTodosFilmes(@RequestBody FiltroDto filtroDto) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(filmeService.buscarTodosFilmes(filtroDto));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> buscarDetalhesFilme(@PathVariable String id) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(filmeService.buscarDetalhesFilme(id));
     }
 }

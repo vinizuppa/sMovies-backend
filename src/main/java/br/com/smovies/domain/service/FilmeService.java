@@ -3,7 +3,8 @@ package br.com.smovies.domain.service;
 import br.com.smovies.domain.entities.Filme;
 import br.com.smovies.domain.repositories.FilmeRepository;
 import br.com.smovies.rest.dtos.FiltroDto;
-import br.com.smovies.rest.dtos.filme.FilmeResponseDto;
+import br.com.smovies.rest.dtos.filme.FilmeDetalhesResponseDto;
+import br.com.smovies.rest.dtos.filme.FilmesListaResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,11 +21,21 @@ public class FilmeService {
         filmeRepository.save(filme);
     }
 
-    public Page<FilmeResponseDto> buscarTodosFilmes(FiltroDto filtroDto) {
+    public Page<FilmesListaResponseDto> buscarTodosFilmes(FiltroDto filtroDto) {
         Page<Filme> filmesPage = filmeRepository.findAll(PageRequest.of(filtroDto.getNumeroPagina(), filtroDto.getQuantidadePorPagina()));
 
-        Page<FilmeResponseDto> filmeResponseDtoPage = filmesPage.map(filme -> new FilmeResponseDto(filme, filmeAvaliacaoService.calcularMediaNotaFilme(filme.getId())));
+        Page<FilmesListaResponseDto> filmeResponseDtoPage = filmesPage.map(filme -> new FilmesListaResponseDto(filme, filmeAvaliacaoService.calcularMediaNotaFilme(filme.getId())));
 
         return filmeResponseDtoPage;
+    }
+
+    public Object buscarDetalhesFilme(String id) {
+        var filme = filmeRepository.findById(id);
+
+        if (filme.isPresent()) {
+            return new FilmeDetalhesResponseDto(filme.get());
+        }
+
+        return null;
     }
 }
