@@ -2,9 +2,13 @@ package br.com.smovies.domain.service;
 
 import br.com.smovies.domain.entities.FilmeAvaliacao;
 import br.com.smovies.domain.repositories.FilmeAvaliacaoRepository;
+import br.com.smovies.rest.dtos.FiltroDto;
 import br.com.smovies.rest.dtos.filme.EstrelaDto;
 import br.com.smovies.rest.dtos.filme.FilmeAvaliacaoResponseDto;
+import br.com.smovies.rest.dtos.filmeAvaliacao.FilmeAvaliacaoDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -67,5 +71,12 @@ public class FilmeAvaliacaoService {
     }
     public void cadastrarFilmeAvaliacao(FilmeAvaliacao filmeAvaliacao) {
         filmeAvaliacaoRepository.save(filmeAvaliacao);
+    }
+
+    public Page<FilmeAvaliacaoDto> listarAvaliacoesPorFilmeId(FiltroDto filtroDto, String filmeId) {
+        Page<FilmeAvaliacao> filmeAvalicaoPage = filmeAvaliacaoRepository.findAllByFilmeId(filmeId, PageRequest.of(filtroDto.getNumeroPagina(), filtroDto.getQuantidadePorPagina()));
+        Page<FilmeAvaliacaoDto> filmeAvaliacaoDtoPage = filmeAvalicaoPage.map(filmeAvaliacao -> new FilmeAvaliacaoDto(filmeAvaliacao, this.calcularEstrelas(filmeAvaliacao.getNota())));
+
+        return filmeAvaliacaoDtoPage;
     }
 }
