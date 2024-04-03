@@ -16,5 +16,5 @@ public class Filme {
     private String sinopse;
     private String urlImagemCapa;
     private LocalDate dataLancamento;
-    private List<Diretor> diretor;
+    private String diretorId;
 }

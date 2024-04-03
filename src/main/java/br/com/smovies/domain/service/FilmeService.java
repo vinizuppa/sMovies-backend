@@ -10,13 +10,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.awt.image.AreaAveragingScaleFilter;
+import java.util.Arrays;
+
 @Service
 public class FilmeService {
     @Autowired
     private FilmeRepository filmeRepository;
     @Autowired
     private FilmeAvaliacaoService filmeAvaliacaoService;
-
+    @Autowired
+    private DiretorService diretorService;
     public void cadastrarFilme(Filme filme) {
         filmeRepository.save(filme);
     }
@@ -31,9 +35,10 @@ public class FilmeService {
 
     public Object buscarDetalhesFilme(String id) {
         var filme = filmeRepository.findById(id);
+        var diretor = diretorService.buscarDiretorPorId(filme.get().getDiretorId());
 
         if (filme.isPresent()) {
-            return new FilmeDetalhesResponseDto(filme.get());
+            return new FilmeDetalhesResponseDto(filme.get(), Arrays.asList(diretor));
         }
 
         return null;

@@ -13,5 +13,5 @@ public class Diretor {
     private String id;
     private String nome;
     private LocalDate dataNascimento;
-    private Pais pais;
+    private String paisId;
 }

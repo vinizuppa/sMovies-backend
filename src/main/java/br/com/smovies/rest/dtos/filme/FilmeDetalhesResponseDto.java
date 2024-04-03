@@ -16,12 +16,12 @@ public class FilmeDetalhesResponseDto {
     private LocalDate dataLancamento;
     private List<Diretor> diretor;
 
-    public FilmeDetalhesResponseDto(Filme filme) {
+    public FilmeDetalhesResponseDto(Filme filme, List<Diretor> diretores) {
         this.id = filme.getId();
         this.nomeCompleto = filme.getNomeCompleto();
         this.sinopse = filme.getSinopse();
         this.urlImagemCapa = filme.getUrlImagemCapa();
         this.dataLancamento = filme.getDataLancamento();
-        this.diretor = filme.getDiretor();
+        this.diretor = diretores;
     }
 }
