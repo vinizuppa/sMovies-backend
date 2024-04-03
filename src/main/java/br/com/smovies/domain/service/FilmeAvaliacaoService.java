@@ -7,6 +7,8 @@ import br.com.smovies.rest.dtos.filme.EstrelaDto;
 import br.com.smovies.rest.dtos.filme.FilmeAvaliacaoResponseDto;
 import br.com.smovies.rest.dtos.filmeAvaliacao.FilmeAvaliacaoDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -69,6 +71,8 @@ public class FilmeAvaliacaoService {
 
         return array;
     }
+
+    @CacheEvict(value="buscarTodosFilmes", allEntries = true)
     public void cadastrarFilmeAvaliacao(FilmeAvaliacao filmeAvaliacao) {
         filmeAvaliacaoRepository.save(filmeAvaliacao);
     }

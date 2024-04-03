@@ -6,6 +6,8 @@ import br.com.smovies.rest.dtos.FiltroDto;
 import br.com.smovies.rest.dtos.filme.FilmeDetalhesResponseDto;
 import br.com.smovies.rest.dtos.filme.FilmesListaResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -21,10 +23,13 @@ public class FilmeService {
     private FilmeAvaliacaoService filmeAvaliacaoService;
     @Autowired
     private DiretorService diretorService;
+
+    @CacheEvict(value="buscarTodosFilmes", allEntries = true)
     public void cadastrarFilme(Filme filme) {
         filmeRepository.save(filme);
     }
 
+    @Cacheable(value="buscarTodosFilmes", key="#filtroDto.numeroPagina")
     public Page<FilmesListaResponseDto> buscarTodosFilmes(FiltroDto filtroDto) {
         Page<Filme> filmesPage = filmeRepository.findAll(PageRequest.of(filtroDto.getNumeroPagina(), filtroDto.getQuantidadePorPagina()));
 
@@ -33,6 +38,7 @@ public class FilmeService {
         return filmeResponseDtoPage;
     }
 
+    @Cacheable("buscarDetalhesFilme")
     public Object buscarDetalhesFilme(String id) {
         var filme = filmeRepository.findById(id);
         var diretor = diretorService.buscarDiretorPorId(filme.get().getDiretorId());

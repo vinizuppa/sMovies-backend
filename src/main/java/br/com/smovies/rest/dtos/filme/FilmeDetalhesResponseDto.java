@@ -4,11 +4,12 @@ import br.com.smovies.domain.entities.Diretor;
 import br.com.smovies.domain.entities.Filme;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
-public class FilmeDetalhesResponseDto {
+public class FilmeDetalhesResponseDto implements Serializable {
     private String id;
     private String nomeCompleto;
     private String sinopse;

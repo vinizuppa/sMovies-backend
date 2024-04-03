@@ -1,14 +1,12 @@
 package br.com.smovies.rest.dtos.filme;
 
-import br.com.smovies.domain.entities.Diretor;
 import br.com.smovies.domain.entities.Filme;
 import lombok.Data;
 
-import java.time.LocalDate;
-import java.util.List;
+import java.io.Serializable;
 
 @Data
-public class FilmesListaResponseDto {
+public class FilmesListaResponseDto implements Serializable {
     private String id;
     private String nomeCompleto;
 //    private String sinopse;

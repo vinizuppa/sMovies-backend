@@ -5,9 +5,11 @@ import br.com.smovies.rest.dtos.filme.EstrelaDto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
-public class FilmeAvaliacaoDto {
+public class FilmeAvaliacaoDto implements Serializable {
     private String nomeAvaliador;
     private Double nota;
     private EstrelaDto estrelaDto;

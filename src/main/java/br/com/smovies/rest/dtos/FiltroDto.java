@@ -1,11 +1,14 @@
 package br.com.smovies.rest.dtos;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter
-@Setter
-public class FiltroDto {
+import java.io.Serializable;
+
+@Data
+public class FiltroDto implements Serializable {
     private Integer numeroPagina;
     private Integer quantidadePorPagina;
 }
